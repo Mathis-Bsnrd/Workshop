@@ -170,12 +170,12 @@ const questions = [
 ]
 
 
-let shuffledQuestions = [] //empty array to hold shuffled selected questions out of all available questions
+let shuffledQuestions = [] //tableau vide pour contenir les questions sélectionnées mélangées parmi toutes les questions disponibles
 
 function handleQuestions() {
-  //function to shuffle and push 10 questions to shuffledQuestions array
-  //app would be dealing with 10questions per session
-  while (shuffledQuestions.length <= 24) {
+  //fonction pour mélanger et pousser 10 questions vers le tableau shuffledQuestions
+  //l'application traiterait 10 questions par session
+  while (shuffledQuestions.length <= 20) {
     const random = questions[Math.floor(Math.random() * questions.length)]
     if (!shuffledQuestions.includes(random)) {
       shuffledQuestions.push(random)
@@ -184,13 +184,13 @@ function handleQuestions() {
 }
 
 
-let questionNumber = 1 //holds the current question number
-let playerScore = 0  //holds the player score
-let wrongAttempt = 0 //amount of wrong answers picked by player
-let indexNumber = 0 //will be used in displaying next question
+let questionNumber = 1 //contient le numéro de la question actuelle
+let playerScore = 0  //détient le score du joueur
+let wrongAttempt = 0 //nombre de mauvaises réponses choisies par le joueur
+let indexNumber = 0 //sera utilisé pour afficher la question suivante
 
-// function for displaying next question in the array to dom
-//also handles displaying players and quiz information to dom
+// fonction pour afficher la question suivante dans le tableau à dom
+// gère également l'affichage des informations sur les joueurs et les quiz à dom
 function NextQuestion(index) {
   handleQuestions()
   const currentQuestion = shuffledQuestions[index]
@@ -206,30 +206,31 @@ function NextQuestion(index) {
 
 
 function checkForAnswer() {
-  const currentQuestion = shuffledQuestions[indexNumber] //gets current Question 
-  const currentQuestionAnswer = currentQuestion.correctOption //gets current Question's answer
-  const options = document.getElementsByName("option"); //gets all elements in dom with name of 'option' (in this the radio inputs)
+  const currentQuestion = shuffledQuestions[indexNumber] // obtient la question actuelle
+  const currentQuestionAnswer = currentQuestion.correctOption // obtient la réponse de la question actuelle
+  const options = document.getElementsByName("option"); // obtient tous les éléments dans dom avec le nom de 'option' (dans ce cas, les entrées radio)
   let correctOption = null
 
   options.forEach((option) => {
     if (option.value === currentQuestionAnswer) {
-      //get's correct's radio input with correct answer
+      // Récupère l'entrée radio de la bonne réponse avec la bonne réponse
       correctOption = option.labels[0].id
     }
   })
 
-  //checking to make sure a radio input has been checked or an option being chosen
+
+  //vérification pour s'assurer qu'une entrée radio a été cochée ou qu'une option a été choisie
   if (options[0].checked === false && options[1].checked === false && options[2].checked === false && options[3].checked == false) {
     document.getElementById('option-modal').style.display = "flex"
   }
 
-  //checking if checked radio button is same as answer
+  // vérifier si le bouton radio coché est identique à la réponse
   options.forEach((option) => {
     if (option.checked === true && option.value === currentQuestionAnswer) {
       document.getElementById(correctOption).style.backgroundColor = "green"
-      playerScore++ //adding to player's score
-      indexNumber++ //adding 1 to index so has to display next question..
-      //set to delay question number till when next question loads
+      playerScore++ //ajout au score du joueur
+      indexNumber++ // ajouter 1 à l'index doit donc afficher la question suivante..
+      // défini pour retarder le numéro de question jusqu'au chargement de la prochaine question
       setTimeout(() => {
         questionNumber++
       }, 1000)
@@ -239,9 +240,9 @@ function checkForAnswer() {
       const wrongLabelId = option.labels[0].id
       document.getElementById(wrongLabelId).style.backgroundColor = "red"
       document.getElementById(correctOption).style.backgroundColor = "green"
-      wrongAttempt++ //adds 1 to wrong attempts 
+      wrongAttempt++ //ajoute 1 aux mauvaises tentatives
       indexNumber++
-      //set to delay question number till when next question loads
+      // défini pour retarder le numéro de question jusqu'au chargement de la prochaine question
       setTimeout(() => {
         questionNumber++
       }, 1000)
@@ -251,24 +252,25 @@ function checkForAnswer() {
 
 
 
-//called when the next button is called
+//appelé lorsque le bouton suivant est appelé
 function handleNextQuestion() {
-  checkForAnswer() //check if player picked right or wrong option
+  checkForAnswer() //vérifie si le joueur a choisi la bonne ou la mauvaise option
   unCheckRadioButtons()
-  //delays next question displaying for a second just for some effects so questions don't rush in on player
+  // retarde l'affichage de la question suivante pendant une seconde juste pour certains effets afin que les questions ne se précipitent pas sur le joueur
   setTimeout(() => {
-    if (indexNumber <= 24) {
-      //displays next question as long as index number isn't greater than 9, remember index number starts from 0, so index 9 is question 10
+    if (indexNumber <= 20) {
+      // affiche la question suivante tant que le numéro d'index n'est pas supérieur à 9, rappelez-vous que le numéro d'index commence à partir de 0, donc l'index 9 est la question 10
+      document.getElementById('explication-modal').style.display = "flex";
       NextQuestion(indexNumber)
     }
     else {
-      handleEndGame()//ends game if index number greater than 9 meaning we're already at the 10th question
+      handleEndGame()// termine le jeu si le numéro d'index est supérieur à 9, ce qui signifie que nous sommes déjà à la 10ème question
     }
     resetOptionBackground()
   }, 1000);
 }
 
-//sets options background back to null after display the right/wrong colors
+//redéfinit l'arrière-plan des options sur null après avoir affiché les bonnes/mauvaises couleurs
 function resetOptionBackground() {
   const options = document.getElementsByName("option");
   options.forEach((option) => {
@@ -276,7 +278,7 @@ function resetOptionBackground() {
   })
 }
 
-// unchecking all radio buttons for next question(can be done with map or foreach loop also)
+// décocher tous les boutons radio pour la question suivante (peut également être fait avec la boucle map ou foreach)
 function unCheckRadioButtons() {
   const options = document.getElementsByName("option");
   for (let i = 0; i < options.length; i++) {
@@ -284,12 +286,12 @@ function unCheckRadioButtons() {
   }
 }
 
-// function for when all questions being answered
+// fonction lorsque toutes les questions reçoivent une réponse
 function handleEndGame() {
   let remark = null
   let remarkColor = null
 
-  // condition check for player remark and remark color
+  // vérification de l'état de la remarque du joueur et de la couleur de la remarque
   if (playerScore <= 3) {
     remark = "Bad Grades, Keep Practicing."
     remarkColor = "red"
@@ -302,9 +304,9 @@ function handleEndGame() {
     remark = "Excellent, Keep the good work going."
     remarkColor = "green"
   }
-  const playerGrade = (playerScore / 10) * 100
+  const playerGrade = (playerScore / 21) * 100
 
-  //data to display to score board
+  //données à afficher sur le tableau des scores
   document.getElementById('remarks').innerHTML = remark
   document.getElementById('remarks').style.color = remarkColor
   document.getElementById('grade-percentage').innerHTML = playerGrade
@@ -314,7 +316,7 @@ function handleEndGame() {
 
 }
 
-//closes score modal, resets game and reshuffles questions
+//ferme le score modal, réinitialise le jeu et remanie les questions
 function closeScoreModal() {
   questionNumber = 1
   playerScore = 0
@@ -325,7 +327,12 @@ function closeScoreModal() {
   document.getElementById('score-modal').style.display = "none"
 }
 
-//function to close warning modal
+//fonction pour fermer le modal d'avertissement
 function closeOptionModal() {
   document.getElementById('option-modal').style.display = "none"
+}
+
+//fonction pour fermer le modal d'explication
+function closeExplicationModal() {
+  document.getElementById('explication-modal').style.display = "none"
 }

@@ -13,13 +13,13 @@
 
       <div class="modal-content-container">
 
-        <h1>Congratulations, Quiz Completed.</h1>
+        <h1>Félicitations, QUIZ Terminé.</h1>
 
         <div class="grade-details">
-          <p>Attempts : 10</p>
-          <p>Wrong Answers : <span id="wrong-answers"></span></p>
-          <p>Right Answers : <span id="right-answers"></span></p>
-          <p>Grade : <span id="grade-percentage"></span>%</p>
+          <p>Questions : 21</p>
+          <p>Mauvaises réponses : <span id="wrong-answers"></span></p>
+          <p>Bonnes réponses : <span id="right-answers"></span></p>
+          <p>Moyenne : <span id="grade-percentage"></span>%</p>
           <p><span id="remarks"></span></p>
         </div>
 
@@ -33,8 +33,8 @@
     <div class="game-quiz-container">
 
       <div class="game-details-container">
-        <h1>Score : <span id="player-score"></span> / 10</h1>
-        <h1> Question : <span id="question-number"></span> / 10</h1>
+        <h1>Score : <span id="player-score"></span> / 21</h1>
+        <h1> Question : <span id="question-number"></span> / 21</h1>
       </div>
 
       <div class="game-question-container">
@@ -46,10 +46,24 @@
         <div class="modal-container" id="option-modal">
 
           <div class="modal-content-container">
-            <h1>Please Pick An Option</h1>
+            <h1>Choisissez une réponse SVP !</h1>
 
             <div class="modal-button-container">
               <button onclick="closeOptionModal()">Continue</button>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-container" id="explication-modal">
+
+          <div class="modal-content-container">
+            <h1>Explication / Solution</h1>
+            <p>...</p>
+            <div class="modal-button-container">
+              <button onclick="closeExplicationModal()">Compris !</button>
             </div>
 
           </div>
