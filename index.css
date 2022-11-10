@@ -11,7 +11,10 @@ html, body{
 
 body{
     font-family: 'Montserrat', serif;
+}
 
+span {
+    margin-bottom: 10px;
 }
 
 main{
@@ -22,7 +25,7 @@ main{
     justify-content: center;
     align-items: center;
     background-color: black;
-    background: url('../assets/background_image.jpg');
+    background: url('https://imgs.search.brave.com/v6OEEN_b7XQatIZwjOg-d5c5uf31FOHnkYREyArjcHY/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9lc2tp/cGFwZXIuY29tL2lt/YWdlcy9lY29sb2d5/LTkuanBn');
     background-color : black;
     background-repeat: no-repeat;
     background-size: cover;
@@ -32,7 +35,7 @@ main{
 .game-quiz-container{
     width: 70rem;
     height: 35rem;
-    background-color: lightgray;
+    background-color: rgb(214, 214, 214);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -116,6 +119,7 @@ input[type=radio]:checked ~ .option {
 .next-button-container{
     width: 50%;
     height: 3rem;
+    margin-top: 40px;
     display: flex;
     justify-content: center;
 }
